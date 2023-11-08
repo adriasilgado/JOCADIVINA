@@ -6,30 +6,56 @@ function comprobar() {
     let numeroUsuario = document.getElementById("input").value;
     let numeroUsuarioSeparado = numeroUsuario.split('');
     console.log(numeroUsuarioSeparado);
-    color(numeroUsuarioSeparado, numeroAdivinarSeparado)
+    generarCeldas(numeroUsuarioSeparado, numeroAdivinarSeparado);
 }
 
-function color(vectorAdivinar, vectorUsuario) {
-    let esta = true
-
-    for(i = 0; i < 5; i++) {
-        if (vectorUsuario[i] == vectorAdivinar[i]) {
-            console.log("verde")
-        }
-        else {
-            let j = 0
-            let amarillo = false
-            while (j < 5 && !amarillo) {
-                if (vectorUsuario[i] == vectorAdivinar[j]) {
-                    amarillo = true
-                }
-                else esta = false
-                ++j
-            }
-            if (!esta && !amarillo) console.log("gris")
-            else if (amarillo) console.log("amarillo")   
-        }
+var div;
+var acertades = 0;
+function generarCeldas(vectorUsuario, vectorAdivinar) {
+    for (i = 0; i < 5; i++) {
+        div = document.createElement("div");
+        div.className = "celdasNuevas";
+        div.innerHTML = vectorUsuario[i];
+        if (vectorUsuario[i] == vectorAdivinar[i]) ++acertades;
+        document.getElementById("celdas").appendChild(div);
+        color(vectorAdivinar, vectorUsuario, i, div);
+        canviMissatge(acertades);
     }
-
+    
 }
+
+function color(vectorAdivinar, vectorUsuario, i, div) {
+    let esta = true;
+    if (vectorUsuario[i] == vectorAdivinar[i]) {
+        div.style.backgroundColor = "#13DF1C";
+    }
+    else {
+        let j = 0;
+        let amarillo = false;
+        while (j < 5 && !amarillo) {
+            if (vectorUsuario[i] == vectorAdivinar[j]) {
+                amarillo = true;
+            }
+            else {
+                esta = false;
+                ++j;
+            }
+        }
+        if (!esta && !amarillo) div.style.backgroundColor = "#71716D";
+        else if (amarillo) div.style.backgroundColor = "#F5F51A";   
+    }
+}
+var intents = 5;
+function canviMissatge(acertades) {
+    let missatge = document.getElementById("missatge");
+    if (acertades == 5) {
+        missatge.innerHTML = "Has acertado, maquina, tifon, numero 1";
+    }
+    else {
+        intents--;
+        missatge.innerHTML = "Te quedan " + intents + " intents";
+    }
+}
+
+
 
