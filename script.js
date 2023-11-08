@@ -11,17 +11,25 @@ function comprobar() {
 
 var div;
 var acertades = 0;
+var intents = 5;
+var correctos = [false, false, false, false, false]
 function generarCeldas(vectorUsuario, vectorAdivinar) {
     for (i = 0; i < 5; i++) {
         div = document.createElement("div");
         div.className = "celdasNuevas";
         div.innerHTML = vectorUsuario[i];
-        if (vectorUsuario[i] == vectorAdivinar[i]) ++acertades;
+        if (vectorUsuario[i] == vectorAdivinar[i]) {
+            console.log(correctos[i])
+            if (correctos[i] == false) {
+                correctos[i] = true
+                ++acertades;
+            }
+        } 
         document.getElementById("celdas").appendChild(div);
         color(vectorAdivinar, vectorUsuario, i, div);
-        canviMissatge(acertades);
     }
-    
+    --intents
+    canviMissatge(acertades, intents);  
 }
 
 function color(vectorAdivinar, vectorUsuario, i, div) {
@@ -45,15 +53,26 @@ function color(vectorAdivinar, vectorUsuario, i, div) {
         else if (amarillo) div.style.backgroundColor = "#F5F51A";   
     }
 }
-var intents = 5;
-function canviMissatge(acertades) {
+function canviMissatge(acertades, intents) {
     let missatge = document.getElementById("missatge");
+    console.log(acertades)
     if (acertades == 5) {
         missatge.innerHTML = "Has acertado, maquina, tifon, numero 1";
     }
+    else if (intents == 0) {
+        missatge.innerHTML = "Te has quedado sin intentos";
+    }
     else {
-        intents--;
-        missatge.innerHTML = "Te quedan " + intents + " intents";
+        missatge.innerHTML = "Te quedan " + intents + " intentos";
+    }
+    comprobarEstat(acertades, intents)
+}
+
+function comprobarEstat(acertades, intents) {
+    let boton = document.getElementById("boton")
+    if (acertades == 5 || intents == 0) {
+        boton.disabled = true
+        boton.style.cursor = "auto"
     }
 }
 
