@@ -126,7 +126,7 @@ button {
               transform: rotateX(180deg);
     }
   }
-  @keyframes celdasNuevas {
+@keyframes celdasNuevas {
     0% {
       -webkit-transform: rotateX(0);
               transform: rotateX(0);
@@ -136,5 +136,8 @@ button {
               transform: rotateX(180deg);
     }
   }
+
+  
+  
   
   

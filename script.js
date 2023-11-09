@@ -6,8 +6,7 @@ function comprobar() {
     let numeroUsuario = document.getElementById("input").value;
     if (/^\d{5}$/.test(numeroUsuario)) {
         let numeroUsuarioSeparado = numeroUsuario.split('');
-        console.log(numeroUsuarioSeparado);
-        generarCeldas(numeroUsuarioSeparado, numeroAdivinarSeparado);
+        generarCeldas(numeroUsuarioSeparado, numeroAdivinarSeparado, numeroAdivinar);
     }
     else {
         missatge.innerHTML = "Introduce un numero de 5 digitos";
@@ -20,27 +19,26 @@ var acertades = 0;
 var intents = 5;
 var correctos = [false, false, false, false, false]
 
-async function generarCeldas(vectorUsuario, vectorAdivinar) {
+async function generarCeldas(vectorUsuario, vectorAdivinar, numeroAdivinar) {
     for (i = 0; i < 5; i++) {
             div = document.createElement("div");
             div.className = "celdasNuevas";
             await delay(300)
             div.innerHTML = vectorUsuario[i];
             if (vectorUsuario[i] == vectorAdivinar[i]) {
-            console.log(correctos[i])
             if (correctos[i] == false) {
                 correctos[i] = true
                 ++acertades;
             }
         } 
         document.getElementById("celdas").appendChild(div);
-        color(vectorAdivinar, vectorUsuario, i, div);
+        color(vectorAdivinar, vectorUsuario, i, div, correctos);
     }
     --intents
-    canviMissatge(acertades, intents, vectorAdivinar); 
+    canviMissatge(acertades, intents, vectorAdivinar, numeroAdivinar); 
 }
 
-function color(vectorAdivinar, vectorUsuario, i, div) {
+function color(vectorAdivinar, vectorUsuario, i, div, correctos) {
     let esta = true;
     if (vectorUsuario[i] == vectorAdivinar[i]) {
         div.style.backgroundColor = "#13DF1C";
@@ -57,18 +55,17 @@ function color(vectorAdivinar, vectorUsuario, i, div) {
                 ++j;
             }
         }
-        if (!esta && !amarillo) div.style.backgroundColor = "#71716D";
-        else if (amarillo) div.style.backgroundColor = "#F5F51A";   
+        if (amarillo && !correctos[i]) div.style.backgroundColor = "#F5F51A";
+        else div.style.backgroundColor = "#71716D";
     }
 }
-function canviMissatge(acertades, intents, vectorAdivinar) {
+function canviMissatge(acertades, intents, vectorAdivinar, numeroAdivinar) {
     let missatge = document.getElementById("missatge");
-    console.log(acertades)
     if (acertades == 5) {
         missatge.innerHTML = "Has acertado, maquina, tifon, numero 1";
     }
     else if (intents == 0) {
-        missatge.innerHTML = "Te has quedado sin intentos";
+        missatge.innerHTML = "Te has quedado sin intentos, el numero era: " + numeroAdivinar;
     }
     else {
         missatge.innerHTML = "Te quedan " + intents + " intentos";
@@ -86,10 +83,31 @@ function comprobarEstat(acertades, intents, vectorAdivinar) {
             document.getElementById("numero2").innerHTML = vectorAdivinar[1] 
             document.getElementById("numero3").innerHTML = vectorAdivinar[2] 
             document.getElementById("numero4").innerHTML = vectorAdivinar[3] 
-            document.getElementById("numero5").innerHTML = vectorAdivinar[4]  
+            document.getElementById("numero5").innerHTML = vectorAdivinar[4]
+            win();  
+        }
+        else if (intents == 0) {
+            lose()
         }
     }
 }
+
+function win() {
+    let gifCR7 = document.createElement("img")
+    gifCR7.src = "images/siuuu.gif";
+    gifCR7.style.position = "absolute";
+    gifCR7.style.marginLeft = "20%";
+    document.getElementById("main").appendChild(gifCR7)
+}
+
+
+function lose() {
+    let sadPikachu = document.createElement("img");
+    sadPikachu.src = "images/XZ9.gif"
+    sadPikachu.style.position = "absolute";
+    sadPikachu.style.marginLeft = "20%";
+    document.getElementById("main").appendChild(sadPikachu)
+} 
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
