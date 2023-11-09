@@ -20,12 +20,13 @@ var acertades = 0;
 var intents = 5;
 var correctos = [false, false, false, false, false]
 
-function generarCeldas(vectorUsuario, vectorAdivinar) {
+async function generarCeldas(vectorUsuario, vectorAdivinar) {
     for (i = 0; i < 5; i++) {
-        div = document.createElement("div");
-        div.className = "celdasNuevas";
-        div.innerHTML = vectorUsuario[i];
-        if (vectorUsuario[i] == vectorAdivinar[i]) {
+            div = document.createElement("div");
+            div.className = "celdasNuevas";
+            await delay(300)
+            div.innerHTML = vectorUsuario[i];
+            if (vectorUsuario[i] == vectorAdivinar[i]) {
             console.log(correctos[i])
             if (correctos[i] == false) {
                 correctos[i] = true
@@ -36,7 +37,7 @@ function generarCeldas(vectorUsuario, vectorAdivinar) {
         color(vectorAdivinar, vectorUsuario, i, div);
     }
     --intents
-    canviMissatge(acertades, intents, vectorAdivinar);  
+    canviMissatge(acertades, intents, vectorAdivinar); 
 }
 
 function color(vectorAdivinar, vectorUsuario, i, div) {
@@ -90,5 +91,8 @@ function comprobarEstat(acertades, intents, vectorAdivinar) {
     }
 }
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
