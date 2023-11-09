@@ -39,30 +39,47 @@ async function generarCeldas(vectorUsuario, vectorAdivinar, numeroAdivinar) {
 }
 
 function color(vectorAdivinar, vectorUsuario, i, div, correctos) {
-    let esta = true;
     if (vectorUsuario[i] == vectorAdivinar[i]) {
         div.style.backgroundColor = "#13DF1C";
-    }
-    else {
+        correctos[i] = true;
+    } else {
         let j = 0;
         let amarillo = false;
         while (j < 5 && !amarillo) {
-            if (vectorUsuario[i] == vectorAdivinar[j]) {
+            if (vectorUsuario[i] == vectorAdivinar[j] && i != j && !correctos[j]) {
                 amarillo = true;
             }
-            else {
-                esta = false;
-                ++j;
+            ++j;
+        }
+
+        if (amarillo) {
+            div.style.backgroundColor = "#F5F51A";
+        } else {
+            let k = 0
+            let repetido = false
+            while (k < 5 && !repetido) {
+                if (vectorUsuario[i] == vectorAdivinar[k] && !correctos[k]) {
+                    amarillo = true;
+                    correctos[k] = true;
+                    repetido = true;
+                }
+                ++k
+            }
+            if (amarillo) {
+                div.style.backgroundColor = "#F5F51A"; 
+            } else {
+                if (!correctos.some((c) => c)) {
+                    div.style.backgroundColor = "#71716D";
+                }
             }
         }
-        if (amarillo && !correctos[i]) div.style.backgroundColor = "#F5F51A";
-        else div.style.backgroundColor = "#71716D";
     }
 }
+
 function canviMissatge(acertades, intents, vectorAdivinar, numeroAdivinar) {
     let missatge = document.getElementById("missatge");
     if (acertades == 5) {
-        missatge.innerHTML = "Has acertado, maquina, tifon, numero 1";
+        missatge.innerHTML = "Has acertado!!!!";
     }
     else if (intents == 0) {
         missatge.innerHTML = "Te has quedado sin intentos, el numero era: " + numeroAdivinar;
@@ -97,7 +114,9 @@ function win() {
     gifCR7.src = "images/siuuu.gif";
     gifCR7.style.position = "absolute";
     gifCR7.style.marginLeft = "20%";
+    gifCR7.style.marginTop = "21%"
     document.getElementById("main").appendChild(gifCR7)
+    
 }
 
 
