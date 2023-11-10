@@ -113,8 +113,8 @@ function win() {
     let gifCR7 = document.createElement("img")
     gifCR7.src = "images/siuuu.gif";
     gifCR7.style.position = "absolute";
-    gifCR7.style.marginLeft = "20%";
-    gifCR7.style.marginTop = "21%"
+    gifCR7.style.marginLeft = "15%";
+    gifCR7.style.marginTop = "20%"
     document.getElementById("main").appendChild(gifCR7)
     
 }
@@ -124,7 +124,8 @@ function lose() {
     let sadPikachu = document.createElement("img");
     sadPikachu.src = "images/XZ9.gif"
     sadPikachu.style.position = "absolute";
-    sadPikachu.style.marginLeft = "20%";
+    sadPikachu.style.marginLeft = "15%";
+    sadPikachu.style.marginTop = "20%"
     document.getElementById("main").appendChild(sadPikachu)
 } 
 
