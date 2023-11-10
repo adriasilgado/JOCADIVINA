@@ -82,7 +82,7 @@ function canviMissatge(acertades, intents, vectorAdivinar, numeroAdivinar) {
         missatge.innerHTML = "Has acertado!!!!";
     }
     else if (intents == 0) {
-        missatge.innerHTML = "Te has quedado sin intentos, el numero era: " + numeroAdivinar;
+        missatge.innerHTML = "Te has quedado sin intentos :(";
     }
     else {
         missatge.innerHTML = "Te quedan " + intents + " intentos";
@@ -95,12 +95,12 @@ function comprobarEstat(acertades, intents, vectorAdivinar) {
     if (acertades == 5 || intents == 0) {
         boton.disabled = true
         boton.style.cursor = "auto"
+        document.getElementById("numero1").innerHTML = vectorAdivinar[0]
+        document.getElementById("numero2").innerHTML = vectorAdivinar[1] 
+        document.getElementById("numero3").innerHTML = vectorAdivinar[2] 
+        document.getElementById("numero4").innerHTML = vectorAdivinar[3] 
+        document.getElementById("numero5").innerHTML = vectorAdivinar[4]
         if (acertades == 5) {
-            document.getElementById("numero1").innerHTML = vectorAdivinar[0]
-            document.getElementById("numero2").innerHTML = vectorAdivinar[1] 
-            document.getElementById("numero3").innerHTML = vectorAdivinar[2] 
-            document.getElementById("numero4").innerHTML = vectorAdivinar[3] 
-            document.getElementById("numero5").innerHTML = vectorAdivinar[4]
             win();  
         }
         else if (intents == 0) {
